@@ -28,6 +28,7 @@
                   ),
                   Expanded(
                     child: ScrollToAnimateTab(
+                      // bodyAnimationDuration: Duration(milliseconds: 1000),
                       tabAnimationCurve: Curves.linear,
                       tabAnimationDuration: Duration(milliseconds: 200),
                       tabHeight: 70,
