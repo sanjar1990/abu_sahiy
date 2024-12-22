@@ -1,5 +1,4 @@
-import 'package:abu_sahiy/view/category_five/controller/category_five_controller.dart';
-import 'package:abu_sahiy/view/category_page/controller/category_controller.dart';
+import 'package:abu_sahiy/view/category_six/controller/category_six_controller.dart';
 import 'package:get/get.dart';
 import 'data/server/api/api_service.dart';
 import 'data/server/auth_interceptor.dart';
@@ -21,8 +20,7 @@ class DIService {
 
     Get.lazyPut<LoginUseCase>(() => LoginUseCase(Get.find()), fenix: true);
     //controller
-    Get.lazyPut<CategoryController>(() => CategoryController(), fenix: true);
-    Get.lazyPut<CategoryFiveController>(() => CategoryFiveController(), fenix: true);
+    Get.lazyPut<CategorySixController>(() => CategorySixController(), fenix: true);
   }
 
 

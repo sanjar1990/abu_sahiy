@@ -1,4 +1,5 @@
-import 'package:abu_sahiy/view/category_page/model/photo_model.dart';
+
+import 'package:abu_sahiy/view/category_six/model/photo_model.dart';
 
 class CategoryModel{
   final String categoryName;

@@ -1,6 +1,6 @@
 import 'package:abu_sahiy/controller/base/base_controller.dart';
-import 'package:abu_sahiy/view/category_page/model/category_model.dart';
-import 'package:abu_sahiy/view/category_page/model/photo_model.dart';
+import 'package:abu_sahiy/view/category_six/model/category_model.dart';
+import 'package:abu_sahiy/view/category_six/model/photo_model.dart';
 
 class CategorySixController extends BaseController{
   List<CategoryModel> categoryList = [

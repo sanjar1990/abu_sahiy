@@ -12,9 +12,7 @@ const EdgeInsetsGeometry _kTabPadding = EdgeInsets.symmetric(
   horizontal: 12,
 );
 
-/// Create a new [ScrollToAnimateTab]
 class ScrollToAnimateTab extends StatefulWidget {
-  /// Create a new [ScrollToAnimateTab]
   const ScrollToAnimateTab({
     required this.tabs,
     this.tabHeight = kToolbarHeight,
@@ -28,31 +26,14 @@ class ScrollToAnimateTab extends StatefulWidget {
     super.key,
   });
 
-  /// List of tabs to be rendered.
   final List<ScrollableList> tabs;
-
-  /// Height of the tab at the top of the view.
   final double tabHeight;
-
-  /// Duration of tab change animation.
   final Duration? tabAnimationDuration;
-
-  /// Duration of inner scroll view animation.
   final Duration? bodyAnimationDuration;
-
-  /// Animation curve used when animating tab change.
   final Curve? tabAnimationCurve;
-
-  /// Animation curve used when changing index of inner [ScrollView]s.
   final Curve? bodyAnimationCurve;
-
-  /// Change Tab Background Color
   final Color? backgroundColor;
-
-  /// Change Active Tab Decoration
   final TabDecoration? activeTabDecoration;
-
-  /// Change Inactive Tab Decoration.
   final TabDecoration? inActiveTabDecoration;
 
   @override
@@ -167,53 +148,8 @@ class _ScrollToAnimateTabState extends State<ScrollToAnimateTab> {
     );
   }
 
-  // Future<void> _onInnerViewScrolled() async {
-  //   final positions = _bodyPositionsListener.itemPositions.value;
-  //
-  //   /// Target [ScrollView] is not attached to any views and/or has no listeners.
-  //   if (positions.isEmpty) return;
-  //
-  //   /// Capture the index of the first [ItemPosition]. If the saved index is same
-  //   /// with the current one do nothing and return.
-  //   final firstIndex =
-  //       _bodyPositionsListener.itemPositions.value.elementAt(0).index;
-  //   if (_index.value == firstIndex) return;
-  //
-  //   /// A new index has been detected.
-  //   await _handleTabScroll(firstIndex);
-  // }
-  // Future<void> _onInnerViewScrolled() async {
-  //
-  //   final positions = _bodyPositionsListener.itemPositions.value;
-  //
-  //   // Target [ScrollView] is not attached to any views and/or has no listeners.
-  //   if (positions.isEmpty) return;
-  //
-  //   // Capture the index of the first [ItemPosition]
-  //   final firstIndex = positions.first.index;
-  //
-  //   // Update `_index` only if it has changed
-  //   if (_index.value != firstIndex) {
-  //     _index.value = firstIndex;
-  //
-  //     // Scroll tabs only if necessary
-  //     double alignment = 0.3; // Default to center alignment
-  //     if (firstIndex == 0) {
-  //       alignment = 0.3; // Align to start for the first tab
-  //     } else if (firstIndex == widget.tabs.length - 1) {
-  //       alignment = 0; // Align to end for the last tab
-  //     }
-  //
-  //     await _tabScrollController.scrollTo(
-  //       index: firstIndex,
-  //       alignment: alignment,
-  //       duration: widget.tabAnimationDuration ?? _kScrollDuration,
-  //       curve: widget.tabAnimationCurve ?? Curves.linear,
-  //     );
-  //   }
-  // }
   Future<void> _onInnerViewScrolled() async {
-    if (_isProgrammaticScroll) return; // Ignore programmatic scrolls
+    if (_isProgrammaticScroll) return;
 
     final positions = _bodyPositionsListener.itemPositions.value;
     if (positions.isEmpty) return;
@@ -230,7 +166,6 @@ class _ScrollToAnimateTabState extends State<ScrollToAnimateTab> {
       } else if (firstIndex == widget.tabs.length - 1) {
         alignment = 0.0;
       }
-
       // _isProgrammaticScroll = true;
       await _tabScrollController.scrollTo(
         index: firstIndex,
@@ -241,69 +176,16 @@ class _ScrollToAnimateTabState extends State<ScrollToAnimateTab> {
       _isProgrammaticScroll = false;
     }
   }
-  Future<void> _handleTabScroll(int index) async {
-    // Determine alignment dynamically
-    double alignment = 0.3; // Default to center
-    if (index == 0) {
-      alignment = 0.3; // Align to start for the first tab
-    } else if (index == widget.tabs.length - 1) {
-      alignment = 0.3; // Align to end for the last tab
-    }
-
-    // Update the index and perform the scroll action
-    _index.value = index;
-    await _tabScrollController.scrollTo(
-      index: index,
-      alignment: alignment,
-      duration: widget.tabAnimationDuration ?? _kScrollDuration,
-      curve: widget.tabAnimationCurve ?? Curves.linear,
-    );
-  }
-    Future<void>_waitToScroll(int index,double alignment)async{
-      _tabScrollController.scrollTo(
-        index: index,
-        alignment: alignment,
-        duration: widget.tabAnimationDuration ?? _kScrollDuration,
-        curve: widget.tabAnimationCurve ?? Curves.linear,
-      );
-      _bodyScrollController.scrollTo(
-        index: index,
-        duration: widget.bodyAnimationDuration ?? _kScrollDuration,
-        curve: widget.bodyAnimationCurve ?? Curves.linear,
-      );
-    }
-  /// When a new tab has been pressed both [_tabScrollController] and
-  /// [_bodyScrollController] should notify their views.
-  // Future<void> _onTabPressed(int index) async {
-  //   print('INDEX:::$index');
-  //   // Determine alignment dynamically for better visibility
-  //   double alignment = 0.3; // Center alignment by default
-  //   if (index == 0) {
-  //     alignment = 0.3; // Align to start for the first tab
-  //   } else if (index == widget.tabs.length - 1) {
-  //     alignment = 0.4; // Align to end for the last tab
-  //   }
-  //   _isProgrammaticScroll = true;
-  //   // Perform the scrolling actions with dynamic alignment
-  //  await  _waitToScroll(index,alignment);
-  //   _index.value = index;
-  //   // Update the index after the scroll completes
-  //   _isProgrammaticScroll = false;
-  // }
 
   Future<void> _onTabPressed(int index) async {
     if (_index.value == index) return;
-    print('INDEXXX:::$index');
-
     double alignment = 0.3;
     if (index == 0) {
       alignment = 0.3; // Align to the start for the first tab
     } else if (index == widget.tabs.length - 1) {
       alignment = 0.0; // Align to the end for the last tab
     }
-
     _isProgrammaticScroll = true;
-
     await _tabScrollController.scrollTo(
       index: index,
       alignment: alignment,
@@ -311,44 +193,16 @@ class _ScrollToAnimateTabState extends State<ScrollToAnimateTab> {
       curve: widget.tabAnimationCurve ?? Curves.linear,
     );
 
-
     await _bodyScrollController.scrollTo(
       index: index,
       duration: widget.bodyAnimationDuration ?? _kScrollDuration,
       curve: widget.bodyAnimationCurve ?? Curves.linear,
     );
-
     _index.value = index;
-   await Future.delayed(Duration(milliseconds: 100));
+   await Future.delayed(Duration(milliseconds: 50));
     _isProgrammaticScroll = false;
 
   }
-  // Future<void> _onTabPressed(int index) async {
-  //   print('INDEX:::$index');
-  //   // Determine alignment dynamically for better visibility
-  //   double alignment = 0.3; // Default to center alignment
-  //   if (index == 0) {
-  //     alignment = 0.0; // Align to start for the first tab
-  //   } else if (index == widget.tabs.length - 1) {
-  //     alignment = 0; // Align to end for the last tab
-  //   }
-  //
-  //   // Update the index value
-  //   _index.value = index;
-  //
-  //   // Perform the scrolling actions with dynamic alignment
-  //   await _tabScrollController.scrollTo(
-  //     index: index,
-  //     alignment: alignment,
-  //     duration: widget.tabAnimationDuration ?? _kScrollDuration,
-  //     curve: widget.tabAnimationCurve ?? Curves.linear,
-  //   );
-  //   await _bodyScrollController.scrollTo(
-  //     index: index,
-  //     duration: widget.bodyAnimationDuration ?? _kScrollDuration,
-  //     curve: widget.bodyAnimationCurve ?? Curves.linear,
-  //   );
-  // }
 
   @override
   void dispose() {

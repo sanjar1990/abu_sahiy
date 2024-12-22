@@ -1,7 +1,4 @@
 import 'package:abu_sahiy/set_up.dart';
-import 'package:abu_sahiy/view/category_five/category_five_page.dart';
-import 'package:abu_sahiy/view/category_four/page/category_page_four.dart';
-import 'package:abu_sahiy/view/category_six/category_six.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -36,10 +33,9 @@ class MyApp extends StatelessWidget {
           locale: LangService.defaultLanguage(),
           fallbackLocale: LangService.fallbackLocale,
           debugShowCheckedModeBanner: false,
-          // initialRoute: RouteHelper.getMainCategory(),
-          // getPages: RouteHelper.routes,
-          home: CategorySix(),
-
+          initialRoute: RouteHelper.getCategorySix(),
+          getPages: RouteHelper.routes,
+          // home: CategorySix(),
         );
       },
     );
